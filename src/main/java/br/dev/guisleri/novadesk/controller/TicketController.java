@@ -1,11 +1,11 @@
 package br.dev.guisleri.novadesk.controller;
 
 import br.dev.guisleri.novadesk.model.Ticket;
+import br.dev.guisleri.novadesk.model.TicketStatus;
 import br.dev.guisleri.novadesk.repository.TicketRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -16,6 +16,17 @@ public class TicketController {
 
     public TicketController(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
+    }
+
+    @PostMapping
+    public Ticket createTicket(@RequestBody Ticket ticket) {
+
+        ticket.setStatus(TicketStatus.OPEN);
+        ticket.setOpenDate(LocalDateTime.now());
+
+        ticketRepository.save(ticket);
+
+        return ticket;
     }
 
     @GetMapping

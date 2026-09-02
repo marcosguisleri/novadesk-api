@@ -57,8 +57,11 @@ public class InMemoryTicketRepository implements TicketRepository {
         ));
     }
 
+    private Long id = 5L;
+
     @Override
     public void save(Ticket ticket) {
+        ticket.setId(id++);
         tickets.add(ticket);
     }
 

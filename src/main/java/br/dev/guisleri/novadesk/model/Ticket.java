@@ -22,6 +22,9 @@ public class Ticket {
         this.openDate = openDate;
     }
 
+    public Ticket() {
+    }
+
     public Long getId() {
         return id;
     }

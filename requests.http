@@ -1,10 +1,34 @@
-### Excluir ticket existente
-DELETE http://localhost:8080/tickets/2
-
-
-### Confirmar exclusão
+### GET all
 GET http://localhost:8080/tickets
 
+### GET by id existente
+GET http://localhost:8080/tickets/1
 
-### Excluir ticket inexistente
+### POST
+POST http://localhost:8080/tickets
+Content-Type: application/json
+
+{
+  "title": "VPN não conecta",
+  "description": "Usuário não consegue acessar a VPN corporativa.",
+  "requester": "Marcos",
+  "priority": "HIGH"
+}
+
+### PUT existente
+PUT http://localhost:8080/tickets/1
+Content-Type: application/json
+
+{
+  "title": "Notebook sem acesso à internet",
+  "description": "Problema em análise pelo suporte.",
+  "requester": "João Silva",
+  "status": "IN_PROGRESS",
+  "priority": "HIGH"
+}
+
+### DELETE existente
+DELETE http://localhost:8080/tickets/2
+
+### DELETE inexistente
 DELETE http://localhost:8080/tickets/999

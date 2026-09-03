@@ -2,7 +2,8 @@ package br.dev.guisleri.novadesk.controller;
 
 import br.dev.guisleri.novadesk.model.Ticket;
 import br.dev.guisleri.novadesk.model.TicketStatus;
-import br.dev.guisleri.novadesk.repository.TicketRepository;
+import br.dev.guisleri.novadesk.service.TicketService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -13,10 +14,10 @@ import java.util.Optional;
 @RequestMapping("/tickets")
 public class TicketController {
 
-    private final TicketRepository ticketRepository;
+    private final TicketService ticketService;
 
-    public TicketController(TicketRepository ticketRepository) {
-        this.ticketRepository = ticketRepository;
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
     }
 
     @PostMapping
@@ -25,7 +26,7 @@ public class TicketController {
         ticket.setStatus(TicketStatus.OPEN);
         ticket.setOpenDate(LocalDateTime.now());
 
-        ticketRepository.save(ticket);
+        ticketService.createTicket(ticket);
 
         return ticket;
     }
@@ -35,22 +36,29 @@ public class TicketController {
             @PathVariable long id,
             @RequestBody Ticket ticket
     ) {
-        return ticketRepository.update(id, ticket);
+        return ticketService.updateTicket(id, ticket);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTicketById(@PathVariable long id) {
-        ticketRepository.deleteById(id);
+    public ResponseEntity<String> deleteTicketById(@PathVariable long id) {
+
+        boolean deleted = ticketService.deleteTicketById(id);
+
+        if (!deleted) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok("Ticket removido com sucesso.");
     }
 
     @GetMapping
     public List<Ticket> getAllTickets() {
-        return ticketRepository.findAll();
+        return ticketService.getAllTickets();
     }
 
     @GetMapping("/{id}")
     public Optional<Ticket> getTicketById(@PathVariable long id) {
-        return ticketRepository.findById(id);
+        return ticketService.getTicketById(id);
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class InMemoryTicketRepository implements TicketRepository {
@@ -68,6 +69,13 @@ public class InMemoryTicketRepository implements TicketRepository {
     @Override
     public List<Ticket> findAll() {
         return tickets;
+    }
+
+    @Override
+    public Optional<Ticket> findById(long id) {
+        return tickets.stream()
+                .filter(ticket -> ticket.getId() == id)
+                .findFirst();
     }
 
 }

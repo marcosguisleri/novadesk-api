@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tickets")
@@ -32,6 +33,11 @@ public class TicketController {
     @GetMapping
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Ticket> getTicketById(@PathVariable long id) {
+        return ticketRepository.findById(id);
     }
 
 }

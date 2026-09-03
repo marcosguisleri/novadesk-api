@@ -9,7 +9,7 @@ public class Ticket {
     private String description;
     private String requester;
     private TicketStatus status;
-    private TicketPriority prioridade;
+    private TicketPriority priority;
     private LocalDateTime openDate;
 
     public Ticket(Long id, String title, String description, String requester, TicketStatus status, TicketPriority prioridade, LocalDateTime openDate) {
@@ -18,7 +18,7 @@ public class Ticket {
         this.description = description;
         this.requester = requester;
         this.status = status;
-        this.prioridade = prioridade;
+        this.priority = prioridade;
         this.openDate = openDate;
     }
 
@@ -65,12 +65,12 @@ public class Ticket {
         this.status = status;
     }
 
-    public TicketPriority getPrioridade() {
-        return prioridade;
+    public TicketPriority getPriority() {
+        return priority;
     }
 
-    public void setPrioridade(TicketPriority prioridade) {
-        this.prioridade = prioridade;
+    public void setPriority(TicketPriority prioridade) {
+        this.priority = prioridade;
     }
 
     public LocalDateTime getOpenDate() {

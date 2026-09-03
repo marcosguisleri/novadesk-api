@@ -30,6 +30,14 @@ public class TicketController {
         return ticket;
     }
 
+    @PutMapping("/{id}")
+    public Ticket updateTicket(
+            @PathVariable long id,
+            @RequestBody Ticket ticket
+    ) {
+        return ticketRepository.update(id, ticket);
+    }
+
     @GetMapping
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();

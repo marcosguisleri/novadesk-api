@@ -67,6 +67,25 @@ public class InMemoryTicketRepository implements TicketRepository {
     }
 
     @Override
+    public Ticket update(long id, Ticket updatedTicket) {
+        Optional<Ticket> foundTicket = findById(id);
+
+        if (foundTicket.isEmpty()) {
+            return null;
+        }
+
+        Ticket ticket = foundTicket.get();
+
+        ticket.setTitle(updatedTicket.getTitle());
+        ticket.setDescription(updatedTicket.getDescription());
+        ticket.setRequester(updatedTicket.getRequester());
+        ticket.setStatus(updatedTicket.getStatus());
+        ticket.setPriority(updatedTicket.getPriority());
+
+        return ticket;
+    }
+
+    @Override
     public List<Ticket> findAll() {
         return tickets;
     }

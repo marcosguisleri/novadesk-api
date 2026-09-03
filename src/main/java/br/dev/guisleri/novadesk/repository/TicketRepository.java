@@ -9,6 +9,8 @@ public interface TicketRepository {
 
     void save(Ticket ticket);
 
+    Ticket update(long id, Ticket updatedTicket);
+
     List<Ticket> findAll();
 
     Optional<Ticket> findById(long id);

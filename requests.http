@@ -1,50 +1,36 @@
-### Listar todos os tickets
-GET http://localhost:8080/tickets
-
-
-### Buscar ticket existente
+### Ver ticket antes da atualização
 GET http://localhost:8080/tickets/1
 
 
-### Buscar outro ticket existente
-GET http://localhost:8080/tickets/3
-
-
-### Buscar ticket inexistente
-GET http://localhost:8080/tickets/999
-
-
-### Criar ticket - prioridade média
-POST http://localhost:8080/tickets
+### Atualizar ticket existente
+PUT http://localhost:8080/tickets/1
 Content-Type: application/json
 
 {
-  "title": "Mouse sem funcionar",
-  "description": "O mouse USB não é reconhecido pelo notebook.",
-  "requester": "Lucas Ferreira",
-  "priority": "MEDIUM"
-}
-
-
-### Criar ticket - prioridade alta
-POST http://localhost:8080/tickets
-Content-Type: application/json
-
-{
-  "title": "Acesso bloqueado ao e-mail",
-  "description": "Usuário não consegue acessar a conta corporativa após troca de senha.",
-  "requester": "Fernanda Lima",
-  "priority": "HIGH"
-}
-
-
-### Criar ticket - prioridade crítica
-POST http://localhost:8080/tickets
-Content-Type: application/json
-
-{
-  "title": "Sistema de vendas indisponível",
-  "description": "Todos os usuários do setor comercial estão sem acesso ao sistema.",
-  "requester": "Rafael Martins",
+  "title": "Notebook sem acesso à internet",
+  "description": "Problema identificado na configuração de rede. Atendimento em andamento.",
+  "requester": "João Silva",
+  "status": "IN_PROGRESS",
   "priority": "CRITICAL"
+}
+
+
+### Ver ticket depois da atualização
+GET http://localhost:8080/tickets/1
+
+
+### Listar todos para confirmar alteração na coleção
+GET http://localhost:8080/tickets
+
+
+### Tentar atualizar ticket inexistente
+PUT http://localhost:8080/tickets/999
+Content-Type: application/json
+
+{
+  "title": "Ticket inexistente",
+  "description": "Teste de atualização com ID que não existe.",
+  "requester": "Usuário Teste",
+  "status": "IN_PROGRESS",
+  "priority": "LOW"
 }

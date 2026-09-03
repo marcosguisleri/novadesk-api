@@ -11,6 +11,8 @@ public interface TicketRepository {
 
     Ticket update(long id, Ticket updatedTicket);
 
+    boolean deleteById(long id);
+
     List<Ticket> findAll();
 
     Optional<Ticket> findById(long id);

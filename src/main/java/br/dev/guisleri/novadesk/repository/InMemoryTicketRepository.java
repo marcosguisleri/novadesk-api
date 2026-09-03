@@ -86,6 +86,11 @@ public class InMemoryTicketRepository implements TicketRepository {
     }
 
     @Override
+    public boolean deleteById(long id) {
+        return tickets.removeIf(ticket -> ticket.getId() == id);
+    }
+
+    @Override
     public List<Ticket> findAll() {
         return tickets;
     }

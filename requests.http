@@ -1,36 +1,10 @@
-### Ver ticket antes da atualização
-GET http://localhost:8080/tickets/1
+### Excluir ticket existente
+DELETE http://localhost:8080/tickets/2
 
 
-### Atualizar ticket existente
-PUT http://localhost:8080/tickets/1
-Content-Type: application/json
-
-{
-  "title": "Notebook sem acesso à internet",
-  "description": "Problema identificado na configuração de rede. Atendimento em andamento.",
-  "requester": "João Silva",
-  "status": "IN_PROGRESS",
-  "priority": "CRITICAL"
-}
-
-
-### Ver ticket depois da atualização
-GET http://localhost:8080/tickets/1
-
-
-### Listar todos para confirmar alteração na coleção
+### Confirmar exclusão
 GET http://localhost:8080/tickets
 
 
-### Tentar atualizar ticket inexistente
-PUT http://localhost:8080/tickets/999
-Content-Type: application/json
-
-{
-  "title": "Ticket inexistente",
-  "description": "Teste de atualização com ID que não existe.",
-  "requester": "Usuário Teste",
-  "status": "IN_PROGRESS",
-  "priority": "LOW"
-}
+### Excluir ticket inexistente
+DELETE http://localhost:8080/tickets/999

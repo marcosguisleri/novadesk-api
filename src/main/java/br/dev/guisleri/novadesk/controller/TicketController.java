@@ -38,6 +38,11 @@ public class TicketController {
         return ticketRepository.update(id, ticket);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteTicketById(@PathVariable long id) {
+        ticketRepository.deleteById(id);
+    }
+
     @GetMapping
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();

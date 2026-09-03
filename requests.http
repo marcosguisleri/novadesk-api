@@ -1,10 +1,16 @@
-### GET all
+### Listar todos os tickets
 GET http://localhost:8080/tickets
 
-### GET by id existente
+
+### Buscar ticket existente
 GET http://localhost:8080/tickets/1
 
-### POST
+
+### Buscar ticket inexistente
+GET http://localhost:8080/tickets/999
+
+
+### Criar ticket normal
 POST http://localhost:8080/tickets
 Content-Type: application/json
 
@@ -15,20 +21,74 @@ Content-Type: application/json
   "priority": "HIGH"
 }
 
-### PUT existente
+
+### Criar ticket tentando alterar campos internos
+POST http://localhost:8080/tickets
+Content-Type: application/json
+
+{
+  "id": 999,
+  "title": "Teste de segurança do DTO",
+  "description": "Tentativa de definir campos controlados pela aplicação.",
+  "requester": "Gustavo",
+  "status": "RESOLVED",
+  "priority": "CRITICAL",
+  "openDate": "2000-01-01T00:00:00"
+}
+
+
+### Atualizar ticket existente
 PUT http://localhost:8080/tickets/1
 Content-Type: application/json
 
 {
   "title": "Notebook sem acesso à internet",
-  "description": "Problema em análise pelo suporte.",
+  "description": "Problema identificado e atendimento em andamento.",
   "requester": "João Silva",
   "status": "IN_PROGRESS",
   "priority": "HIGH"
 }
 
-### DELETE existente
+
+### Atualizar ticket tentando alterar id e openDate
+PUT http://localhost:8080/tickets/1
+Content-Type: application/json
+
+{
+  "id": 999,
+  "title": "Notebook atualizado",
+  "description": "Teste para garantir que ID e data não sejam alterados.",
+  "requester": "João Silva",
+  "status": "RESOLVED",
+  "priority": "MEDIUM",
+  "openDate": "2000-01-01T00:00:00"
+}
+
+
+### Confirmar atualização
+GET http://localhost:8080/tickets/1
+
+
+### Atualizar ticket inexistente
+PUT http://localhost:8080/tickets/999
+Content-Type: application/json
+
+{
+  "title": "Ticket inexistente",
+  "description": "Teste de atualização de um recurso inexistente.",
+  "requester": "Usuário Teste",
+  "status": "IN_PROGRESS",
+  "priority": "LOW"
+}
+
+
+### Excluir ticket existente
 DELETE http://localhost:8080/tickets/2
 
-### DELETE inexistente
+
+### Excluir ticket inexistente
 DELETE http://localhost:8080/tickets/999
+
+
+### Listar tickets após alterações
+GET http://localhost:8080/tickets

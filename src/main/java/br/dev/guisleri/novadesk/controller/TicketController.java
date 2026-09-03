@@ -1,12 +1,14 @@
 package br.dev.guisleri.novadesk.controller;
 
+import br.dev.guisleri.novadesk.dto.CreateTicketRequestDTO;
+import br.dev.guisleri.novadesk.dto.TicketResponseDTO;
+import br.dev.guisleri.novadesk.dto.UpdateTicketRequestDTO;
 import br.dev.guisleri.novadesk.model.Ticket;
-import br.dev.guisleri.novadesk.model.TicketStatus;
 import br.dev.guisleri.novadesk.service.TicketService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,22 +23,23 @@ public class TicketController {
     }
 
     @PostMapping
-    public Ticket createTicket(@RequestBody Ticket ticket) {
-
-        ticket.setStatus(TicketStatus.OPEN);
-        ticket.setOpenDate(LocalDateTime.now());
-
-        ticketService.createTicket(ticket);
-
-        return ticket;
+    public ResponseEntity<TicketResponseDTO> createTicket(
+            @RequestBody CreateTicketRequestDTO requestDTO
+    ) {
+        Ticket ticket = ticketService.createTicket(requestDTO);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(convertToResponseDTO(ticket));
     }
 
     @PutMapping("/{id}")
-    public Ticket updateTicket(
+    public TicketResponseDTO updateTicket(
             @PathVariable long id,
-            @RequestBody Ticket ticket
+            @RequestBody UpdateTicketRequestDTO requestDTO
     ) {
-        return ticketService.updateTicket(id, ticket);
+        Ticket updateTicket = ticketService.updateTicket(id, requestDTO);
+
+        return convertToResponseDTO(updateTicket);
     }
 
     @DeleteMapping("/{id}")
@@ -52,13 +55,27 @@ public class TicketController {
     }
 
     @GetMapping
-    public List<Ticket> getAllTickets() {
-        return ticketService.getAllTickets();
+    public List<TicketResponseDTO> getAllTickets() {
+        return ticketService.getAllTickets()
+                .stream()
+                .map(this::convertToResponseDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public Optional<Ticket> getTicketById(@PathVariable long id) {
-        return ticketService.getTicketById(id);
+    public Optional<TicketResponseDTO> getTicketById(@PathVariable long id) {
+        return ticketService.getTicketById(id)
+                .map(this::convertToResponseDTO);
+    }
+
+    private TicketResponseDTO convertToResponseDTO(Ticket ticket) {
+        return new TicketResponseDTO(ticket.getId(),
+                ticket.getTitle(),
+                ticket.getDescription(),
+                ticket.getRequester(),
+                ticket.getStatus(),
+                ticket.getPriority(),
+                ticket.getOpenDate());
     }
 
 }

@@ -1,9 +1,13 @@
 package br.dev.guisleri.novadesk.service;
 
+import br.dev.guisleri.novadesk.dto.CreateTicketRequestDTO;
+import br.dev.guisleri.novadesk.dto.UpdateTicketRequestDTO;
 import br.dev.guisleri.novadesk.model.Ticket;
+import br.dev.guisleri.novadesk.model.TicketStatus;
 import br.dev.guisleri.novadesk.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +21,31 @@ public class TicketService {
     }
 
     // Criação, edição e delete
-    public void createTicket(Ticket ticket) {
+    public Ticket createTicket(CreateTicketRequestDTO requestDTO) {
+        Ticket ticket = new Ticket();
+
+        ticket.setTitle(requestDTO.title());
+        ticket.setDescription(requestDTO.description());
+        ticket.setRequester(requestDTO.requester());
+        ticket.setPriority(requestDTO.priority());
+
+        ticket.setStatus(TicketStatus.OPEN);
+        ticket.setOpenDate(LocalDateTime.now());
+
         ticketRepository.save(ticket);
+
+        return ticket;
     }
 
-    public Ticket updateTicket(long id, Ticket updatedTicket) {
+    public Ticket updateTicket(long id, UpdateTicketRequestDTO requestDTO) {
+        Ticket updatedTicket = new Ticket();
+
+        updatedTicket.setTitle(requestDTO.title());
+        updatedTicket.setDescription(requestDTO.description());
+        updatedTicket.setRequester(requestDTO.requester());
+        updatedTicket.setPriority(requestDTO.priority());
+        updatedTicket.setStatus(requestDTO.status());
+
         return ticketRepository.update(id, updatedTicket);
     }
 

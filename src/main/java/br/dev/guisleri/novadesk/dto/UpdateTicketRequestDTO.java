@@ -2,12 +2,26 @@ package br.dev.guisleri.novadesk.dto;
 
 import br.dev.guisleri.novadesk.model.TicketPriority;
 import br.dev.guisleri.novadesk.model.TicketStatus;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public record UpdateTicketRequestDTO(
+        @NotBlank
+        @Size(min = 5, max = 100)
         String title,
+
+        @NotBlank
+        @Size(max = 1000)
         String description,
+
+        @NotBlank
         String requester,
+
+        @NotNull
         TicketStatus status,
+
+        @NotNull
         TicketPriority priority
 ) {
 }

@@ -5,6 +5,7 @@ import br.dev.guisleri.novadesk.dto.TicketResponseDTO;
 import br.dev.guisleri.novadesk.dto.UpdateTicketRequestDTO;
 import br.dev.guisleri.novadesk.model.Ticket;
 import br.dev.guisleri.novadesk.service.TicketService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<TicketResponseDTO> createTicket(
-            @RequestBody CreateTicketRequestDTO requestDTO
+            @Valid @RequestBody CreateTicketRequestDTO requestDTO
     ) {
         Ticket ticket = ticketService.createTicket(requestDTO);
         return ResponseEntity
@@ -35,7 +36,7 @@ public class TicketController {
     @PutMapping("/{id}")
     public TicketResponseDTO updateTicket(
             @PathVariable long id,
-            @RequestBody UpdateTicketRequestDTO requestDTO
+            @Valid @RequestBody UpdateTicketRequestDTO requestDTO
     ) {
         Ticket updateTicket = ticketService.updateTicket(id, requestDTO);
 

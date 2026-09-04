@@ -2,6 +2,7 @@ package br.dev.guisleri.novadesk.service;
 
 import br.dev.guisleri.novadesk.dto.CreateTicketRequestDTO;
 import br.dev.guisleri.novadesk.dto.UpdateTicketRequestDTO;
+import br.dev.guisleri.novadesk.exception.TicketNotFoundException;
 import br.dev.guisleri.novadesk.model.Ticket;
 import br.dev.guisleri.novadesk.model.TicketStatus;
 import br.dev.guisleri.novadesk.repository.TicketRepository;
@@ -46,11 +47,22 @@ public class TicketService {
         updatedTicket.setPriority(requestDTO.priority());
         updatedTicket.setStatus(requestDTO.status());
 
-        return ticketRepository.update(id, updatedTicket);
+        Ticket updatedTicketResult = ticketRepository.update(id, updatedTicket);
+
+        if (updatedTicketResult == null) {
+            throw new TicketNotFoundException(id);
+        }
+
+        return updatedTicketResult;
     }
 
-    public boolean deleteTicketById(long id) {
-        return ticketRepository.deleteById(id);
+    public void deleteTicketById(long id) {
+        boolean deleted = ticketRepository.deleteById(id);
+
+        if (!deleted) {
+            throw new TicketNotFoundException(id);
+        }
+
     }
 
     // Buscas
@@ -58,8 +70,9 @@ public class TicketService {
         return ticketRepository.findAll();
     }
 
-    public Optional<Ticket> getTicketById(long id) {
-        return ticketRepository.findById(id);
+    public Ticket getTicketById(long id) {
+        return ticketRepository.findById(id)
+                .orElseThrow(() -> new TicketNotFoundException(id));
     }
 
 }

@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/tickets")
@@ -46,11 +45,7 @@ public class TicketController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteTicketById(@PathVariable long id) {
 
-        boolean deleted = ticketService.deleteTicketById(id);
-
-        if (!deleted) {
-            return ResponseEntity.notFound().build();
-        }
+        ticketService.deleteTicketById(id);
 
         return ResponseEntity.ok("Ticket removido com sucesso.");
     }
@@ -64,9 +59,9 @@ public class TicketController {
     }
 
     @GetMapping("/{id}")
-    public Optional<TicketResponseDTO> getTicketById(@PathVariable long id) {
-        return ticketService.getTicketById(id)
-                .map(this::convertToResponseDTO);
+    public TicketResponseDTO getTicketById(@PathVariable long id) {
+        Ticket ticketById = ticketService.getTicketById(id);
+        return convertToResponseDTO(ticketById);
     }
 
     private TicketResponseDTO convertToResponseDTO(Ticket ticket) {

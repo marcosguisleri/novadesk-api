@@ -1,4 +1,23 @@
-### POST - criar ticket
+### GET - todos os tickets
+GET http://localhost:8080/tickets
+
+
+### GET - filtrar por status
+GET http://localhost:8080/tickets?status=OPEN
+
+
+### GET - filtrar por prioridade
+GET http://localhost:8080/tickets?priority=HIGH
+
+
+### GET - filtrar por status e prioridade
+GET http://localhost:8080/tickets?status=OPEN&priority=HIGH
+
+
+### GET - filtro sem resultados
+GET http://localhost:8080/tickets?status=RESOLVED&priority=CRITICAL
+
+### Ticket 1
 POST http://localhost:8080/tickets
 Content-Type: application/json
 
@@ -10,30 +29,49 @@ Content-Type: application/json
 }
 
 
-### GET - listar tickets
-GET http://localhost:8080/tickets
-
-
-### GET - buscar por id
-GET http://localhost:8080/tickets/1
-
-
-### PUT - atualizar ticket
-PUT http://localhost:8080/tickets/1
+### Ticket 2
+POST http://localhost:8080/tickets
 Content-Type: application/json
 
 {
-  "title": "Erro no acesso à VPN",
-  "description": "Problema em análise pela equipe de infraestrutura.",
-  "requester": "Marcos",
-  "status": "IN_PROGRESS",
+  "title": "Impressora sem conexão",
+  "description": "A impressora do financeiro aparece offline.",
+  "requester": "Ana",
+  "priority": "MEDIUM"
+}
+
+
+### Ticket 3
+POST http://localhost:8080/tickets
+Content-Type: application/json
+
+{
+  "title": "Sistema financeiro indisponível",
+  "description": "Usuário não consegue acessar o sistema financeiro.",
+  "requester": "Carlos",
   "priority": "CRITICAL"
 }
 
 
-### DELETE - remover ticket
-DELETE http://localhost:8080/tickets/1
+### Ticket 4
+POST http://localhost:8080/tickets
+Content-Type: application/json
+
+{
+  "title": "Instalação do Microsoft Teams",
+  "description": "Solicitada instalação do Teams no notebook.",
+  "requester": "Mariana",
+  "priority": "LOW"
+}
 
 
-### GET - confirmar remoção
-GET http://localhost:8080/tickets/1
+### Ticket 5
+POST http://localhost:8080/tickets
+Content-Type: application/json
+
+{
+  "title": "E-mail corporativo bloqueado",
+  "description": "Usuário não consegue acessar a conta de e-mail.",
+  "requester": "João",
+  "priority": "HIGH"
+}

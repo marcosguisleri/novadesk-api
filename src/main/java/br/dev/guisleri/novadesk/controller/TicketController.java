@@ -4,6 +4,8 @@ import br.dev.guisleri.novadesk.dto.CreateTicketRequestDTO;
 import br.dev.guisleri.novadesk.dto.TicketResponseDTO;
 import br.dev.guisleri.novadesk.dto.UpdateTicketRequestDTO;
 import br.dev.guisleri.novadesk.model.Ticket;
+import br.dev.guisleri.novadesk.model.TicketPriority;
+import br.dev.guisleri.novadesk.model.TicketStatus;
 import br.dev.guisleri.novadesk.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
+    // Create, Update e Delete
     @PostMapping
     public ResponseEntity<TicketResponseDTO> createTicket(
             @Valid @RequestBody CreateTicketRequestDTO requestDTO
@@ -50,10 +53,25 @@ public class TicketController {
         return ResponseEntity.ok("Ticket removido com sucesso.");
     }
 
+    // Buscas
     @GetMapping
-    public List<TicketResponseDTO> getAllTickets() {
-        return ticketService.getAllTickets()
-                .stream()
+    public List<TicketResponseDTO> getTickets(
+            @RequestParam(required = false) TicketStatus status,
+            @RequestParam(required = false) TicketPriority priority
+    ) {
+        List<Ticket> tickets;
+
+        if (status != null && priority != null) {
+            tickets = ticketService.getTicketsByStatusAndPriority(status, priority);
+        } else if (status != null) {
+            tickets = ticketService.getTicketsByStatus(status);
+        } else if (priority != null) {
+            tickets = ticketService.getTicketsByPriority(priority);
+        } else {
+            tickets = ticketService.getAllTickets();
+        }
+
+        return tickets.stream()
                 .map(this::convertToResponseDTO)
                 .toList();
     }
@@ -64,6 +82,7 @@ public class TicketController {
         return convertToResponseDTO(ticketById);
     }
 
+    // Métodos auxiliares
     private TicketResponseDTO convertToResponseDTO(Ticket ticket) {
         return new TicketResponseDTO(ticket.getId(),
                 ticket.getTitle(),

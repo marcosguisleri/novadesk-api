@@ -4,6 +4,7 @@ import br.dev.guisleri.novadesk.dto.CreateTicketRequestDTO;
 import br.dev.guisleri.novadesk.dto.UpdateTicketRequestDTO;
 import br.dev.guisleri.novadesk.exception.TicketNotFoundException;
 import br.dev.guisleri.novadesk.model.Ticket;
+import br.dev.guisleri.novadesk.model.TicketPriority;
 import br.dev.guisleri.novadesk.model.TicketStatus;
 import br.dev.guisleri.novadesk.repository.TicketRepository;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,18 @@ public class TicketService {
     public Ticket getTicketById(long id) {
         return ticketRepository.findById(id)
                 .orElseThrow(() -> new TicketNotFoundException(id));
+    }
+
+    public List<Ticket> getTicketsByStatus(TicketStatus status) {
+        return ticketRepository.findByStatus(status);
+    }
+
+    public List<Ticket> getTicketsByPriority(TicketPriority priority) {
+        return ticketRepository.findByPriority(priority);
+    }
+
+    public List<Ticket> getTicketsByStatusAndPriority(TicketStatus status, TicketPriority priority) {
+        return ticketRepository.findByStatusAndPriority(status, priority);
     }
 
 }

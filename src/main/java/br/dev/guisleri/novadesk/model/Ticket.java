@@ -2,23 +2,36 @@ package br.dev.guisleri.novadesk.model;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Ticket {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
+
     private String description;
+
     private String requester;
+
+    @Enumerated(EnumType.STRING)
     private TicketStatus status;
+
+    @Enumerated(EnumType.STRING)
     private TicketPriority priority;
+
     private LocalDateTime openDate;
 
-    public Ticket(Long id, String title, String description, String requester, TicketStatus status, TicketPriority prioridade, LocalDateTime openDate) {
+    public Ticket(Long id, String title, String description, String requester, TicketStatus status, TicketPriority priority, LocalDateTime openDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.requester = requester;
         this.status = status;
-        this.priority = prioridade;
+        this.priority = priority;
         this.openDate = openDate;
     }
 

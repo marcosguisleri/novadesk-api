@@ -1,20 +1,8 @@
 package br.dev.guisleri.novadesk.repository;
 
 import br.dev.guisleri.novadesk.model.Ticket;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface TicketRepository {
-
-    void save(Ticket ticket);
-
-    Ticket update(long id, Ticket updatedTicket);
-
-    boolean deleteById(long id);
-
-    List<Ticket> findAll();
-
-    Optional<Ticket> findById(long id);
+public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
 }

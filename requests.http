@@ -1,0 +1,39 @@
+### POST - criar ticket
+POST http://localhost:8080/tickets
+Content-Type: application/json
+
+{
+  "title": "Erro no acesso à VPN",
+  "description": "Usuário não consegue conectar na VPN corporativa.",
+  "requester": "Marcos",
+  "priority": "HIGH"
+}
+
+
+### GET - listar tickets
+GET http://localhost:8080/tickets
+
+
+### GET - buscar por id
+GET http://localhost:8080/tickets/1
+
+
+### PUT - atualizar ticket
+PUT http://localhost:8080/tickets/1
+Content-Type: application/json
+
+{
+  "title": "Erro no acesso à VPN",
+  "description": "Problema em análise pela equipe de infraestrutura.",
+  "requester": "Marcos",
+  "status": "IN_PROGRESS",
+  "priority": "CRITICAL"
+}
+
+
+### DELETE - remover ticket
+DELETE http://localhost:8080/tickets/1
+
+
+### GET - confirmar remoção
+GET http://localhost:8080/tickets/1

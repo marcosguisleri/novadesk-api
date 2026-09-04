@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TicketService {
@@ -39,30 +38,20 @@ public class TicketService {
     }
 
     public Ticket updateTicket(long id, UpdateTicketRequestDTO requestDTO) {
-        Ticket updatedTicket = new Ticket();
+        Ticket ticketToUpdate = getTicketById(id);
 
-        updatedTicket.setTitle(requestDTO.title());
-        updatedTicket.setDescription(requestDTO.description());
-        updatedTicket.setRequester(requestDTO.requester());
-        updatedTicket.setPriority(requestDTO.priority());
-        updatedTicket.setStatus(requestDTO.status());
+        ticketToUpdate.setTitle(requestDTO.title());
+        ticketToUpdate.setDescription(requestDTO.description());
+        ticketToUpdate.setRequester(requestDTO.requester());
+        ticketToUpdate.setStatus(requestDTO.status());
+        ticketToUpdate.setPriority(requestDTO.priority());
 
-        Ticket updatedTicketResult = ticketRepository.update(id, updatedTicket);
-
-        if (updatedTicketResult == null) {
-            throw new TicketNotFoundException(id);
-        }
-
-        return updatedTicketResult;
+        return ticketRepository.save(ticketToUpdate);
     }
 
     public void deleteTicketById(long id) {
-        boolean deleted = ticketRepository.deleteById(id);
-
-        if (!deleted) {
-            throw new TicketNotFoundException(id);
-        }
-
+        Ticket ticketToDelete = getTicketById(id);
+        ticketRepository.delete(ticketToDelete);
     }
 
     // Buscas

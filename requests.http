@@ -1,77 +1,10 @@
-### GET - todos os tickets
+### Excluir ticket existente
+DELETE http://localhost:8080/tickets/2
+
+
+### Confirmar exclusão
 GET http://localhost:8080/tickets
 
 
-### GET - filtrar por status
-GET http://localhost:8080/tickets?status=OPEN
-
-
-### GET - filtrar por prioridade
-GET http://localhost:8080/tickets?priority=HIGH
-
-
-### GET - filtrar por status e prioridade
-GET http://localhost:8080/tickets?status=OPEN&priority=HIGH
-
-
-### GET - filtro sem resultados
-GET http://localhost:8080/tickets?status=RESOLVED&priority=CRITICAL
-
-### Ticket 1
-POST http://localhost:8080/tickets
-Content-Type: application/json
-
-{
-  "title": "Erro no acesso à VPN",
-  "description": "Usuário não consegue conectar na VPN corporativa.",
-  "requester": "Marcos",
-  "priority": "HIGH"
-}
-
-
-### Ticket 2
-POST http://localhost:8080/tickets
-Content-Type: application/json
-
-{
-  "title": "Impressora sem conexão",
-  "description": "A impressora do financeiro aparece offline.",
-  "requester": "Ana",
-  "priority": "MEDIUM"
-}
-
-
-### Ticket 3
-POST http://localhost:8080/tickets
-Content-Type: application/json
-
-{
-  "title": "Sistema financeiro indisponível",
-  "description": "Usuário não consegue acessar o sistema financeiro.",
-  "requester": "Carlos",
-  "priority": "CRITICAL"
-}
-
-
-### Ticket 4
-POST http://localhost:8080/tickets
-Content-Type: application/json
-
-{
-  "title": "Instalação do Microsoft Teams",
-  "description": "Solicitada instalação do Teams no notebook.",
-  "requester": "Mariana",
-  "priority": "LOW"
-}
-
-
-### Ticket 5
-POST http://localhost:8080/tickets
-Content-Type: application/json
-
-{
-  "title": "E-mail corporativo bloqueado",
-  "description": "Usuário não consegue acessar a conta de e-mail.",
-  "requester": "João",
-  "priority": "HIGH"
-}
+### Excluir ticket inexistente
+DELETE http://localhost:8080/tickets/999
